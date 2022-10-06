@@ -6,19 +6,10 @@ from flask import Flask, render_template, request
 
 #Step 2 - Declaring the ‘MediaPipe’ objects and the finger and thumb coordinates
 cap = cv2.VideoCapture(0)
-mp_Hands = mp.solutions.hands
-hands = mp_Hands.Hands()
-mpDraw = mp.solutions.drawing_utils
-finger_Coord = [(8, 6), (12, 10), (16, 14), (20, 18)]
-thumb_Coord = (4,2)
 
-#GAME DEETS
-
-outcomes = ["ROCK", "SCISSOR", "PAPER"]
-computer = "READY"
 
 #Functions
-def generate_multiLandMarks(image):
+def generate_multiLandMarks(image, hands):
      #Step 3 - Converting the input image to ‘RGB’ image
 
     RGB_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -27,7 +18,7 @@ def generate_multiLandMarks(image):
 
     return multiLandMarks
 
-def hand_list(multiLandMarks):
+def hand_list(multiLandMarks, mpDraw, mp_Hands):
     """
     Returns hand list if multiLandMarks is not empty    
 
@@ -49,7 +40,7 @@ def hand_list(multiLandMarks):
 
     return handList
 
-def hand_interpret(finger_Coord, thumb_Coord):
+def hand_interpret(finger_Coord, thumb_Coord, handList):
     """
     Counts the number of fingers to return interpreted move as:
     ROCK, PAPER, SCISSOR or INVALID
@@ -90,21 +81,42 @@ def display(move,image,computer):
             cv2.putText(image, str(move) + "|" + computer + "| LOSE", (10,150), cv2.FONT_HERSHEY_PLAIN, 3, (0,255,0), 6)
         
 
+def rock_paper_scissor(image):
+    """
+    Game
+    
+    :param image: takes image as input and returns the image with RPS game
+   
+    """
+    mp_Hands = mp.solutions.hands
+    hands = mp_Hands.Hands()
+    mpDraw = mp.solutions.drawing_utils
+    finger_Coord = [(8, 6), (12, 10), (16, 14), (20, 18)]
+    thumb_Coord = (4,2)
 
+    #GAME DEETS
 
-while True:
-    success, image = cap.read()
+    outcomes = ["ROCK", "SCISSOR", "PAPER"]
+    computer = "READY"
 
-    multiLandMarks = generate_multiLandMarks(image)
+    multiLandMarks = generate_multiLandMarks(image, hands)
 
     if multiLandMarks == None:
         computer = np.random.choice(outcomes)
 
     if multiLandMarks:
 
-        handList =  hand_list(multiLandMarks)
-        move = hand_interpret(finger_Coord, thumb_Coord )
+        handList =  hand_list(multiLandMarks, mpDraw, mp_Hands)
+        move = hand_interpret(finger_Coord, thumb_Coord, handList)
         display(move,image,computer) 
+
+
+
+while True:
+    success, image = cap.read()
+
+    rock_paper_scissor(image)
+    
 
     cv2.imshow("Counting number of fingers", image)
     if cv2.waitKey(1) & 0xFF == ord('q'):
