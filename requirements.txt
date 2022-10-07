@@ -1,45 +1,4 @@
-absl-py==1.2.0
-attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1659291887007/work
-certifi==2022.9.24
-charset-normalizer==2.1.1
-click @ file:///C:/ci/click_1646056799533/work
-colorama @ file:///tmp/build/80754af9/colorama_1607707115595/work
-contourpy==1.0.5
-cycler==0.11.0
-docopt==0.6.2
-flasgger @ file:///home/conda/feedstock_root/build_artifacts/flasgger_1618577453511/work
-Flask @ file:///opt/conda/conda-bld/flask_1648041541647/work
-Flask-SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/flask-sqlalchemy_1616102249273/work
-fonttools==4.37.4
-greenlet @ file:///C:/ci/greenlet_1628888262822/work
-idna==3.4
-importlib-metadata @ file:///D:/bld/importlib-metadata_1653252985644/work
-importlib-resources @ file:///home/conda/feedstock_root/build_artifacts/importlib_resources_1658604161399/work
-itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
-Jinja2 @ file:///opt/conda/conda-bld/jinja2_1647436528585/work
-jsonschema @ file:///home/conda/feedstock_root/build_artifacts/jsonschema-meta_1662736858348/work
-kiwisolver==1.4.4
-MarkupSafe @ file:///C:/ci/markupsafe_1654489871526/work
-matplotlib==3.6.0
+Flask==2.0.3
 mediapipe==0.8.11
-mistune @ file:///home/conda/feedstock_root/build_artifacts/mistune_1657892024508/work
-numpy @ file:///D:/bld/numpy_1657483969318/work
-opencv-contrib-python==4.6.0.66
-packaging==21.3
-Pillow==9.2.0
-pipreqs==0.4.11
-pkgutil_resolve_name @ file:///home/conda/feedstock_root/build_artifacts/pkgutil-resolve-name_1633981968097/work
-protobuf==3.20.3
-pyparsing==3.0.9
-pyrsistent @ file:///D:/bld/pyrsistent_1649013505682/work
-python-dateutil==2.8.2
-PyYAML @ file:///D:/bld/pyyaml_1648757284286/work
-requests==2.28.1
-six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
-SQLAlchemy @ file:///C:/ci/sqlalchemy_1647600010916/work
-typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1656706066251/work
-urllib3==1.26.12
-Werkzeug @ file:///opt/conda/conda-bld/werkzeug_1645628268370/work
-wincertstore==0.2
-yarg==0.1.9
-zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1659400682470/work
+numpy==1.23.1
+opencv_contrib_python==4.6.0.66
