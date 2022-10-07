@@ -70,7 +70,7 @@ def display(move,image,computer):
     if (computer == "ROCK" and move == "PAPER") or (computer == "PAPER" and move == "SCISSOR") or (computer == "SCISSOR" and move == "ROCK"):
         cv2.putText(image, str(move) + "|" + computer + "| WIN", (10,150), cv2.FONT_HERSHEY_PLAIN, 3, (0,255,0), 6)
     elif move == "INVALID":
-        cv2.putText(image, "INVALID", (10,150), cv2.FONT_HERSHEY_PLAIN, 3, (0,255,0), 6)
+        cv2.imwrite('/image.png',cv2.putText(image, "INVALID", (10,150), cv2.FONT_HERSHEY_PLAIN, 3, (0,255,0), 6))
     elif move == computer:
         cv2.putText(image, str(move) + "|" + computer + "| DRAW", (10,150), cv2.FONT_HERSHEY_PLAIN, 3, (0,255,0), 6)
     else:
@@ -97,23 +97,36 @@ def rock_paper_scissor(image, mp_Hands, hands, mpDraw, multiLandMarks, computer)
         display(move,image,computer) 
 
 
-cap = cv2.VideoCapture(0)
-mp_Hands = mp.solutions.hands
-hands = mp_Hands.Hands()
-mpDraw = mp.solutions.drawing_utils
-outcomes = ["ROCK","PAPER","SCISSOR"]
-
-while True:
-    success, image = cap.read()
-
-    multiLandMarks = generate_multiLandMarks(image, hands)
-
-    if multiLandMarks == None:
-        computer = np.random.choice(outcomes)
-    rock_paper_scissor(image, mp_Hands, hands, mpDraw, multiLandMarks, computer)
+def initialize_rps():
+    mp_Hands = mp.solutions.hands
+    hands = mp_Hands.Hands()
+    mpDraw = mp.solutions.drawing_utils
+    outcomes = ["ROCK","PAPER","SCISSOR"]
+    return mp_Hands, hands, mpDraw, outcomes
 
 
-    cv2.imshow("Counting number of fingers", image)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+def da_game():
+
+    mp_Hands, hands, mpDraw, outcomes = initialize_rps()
+    cap = cv2.VideoCapture(0)
+
+    while True:
+        success, image = cap.read()
+
+        if not success:
+            break
+        
+        multiLandMarks = generate_multiLandMarks(image, hands)
+
+        if multiLandMarks == None:
+            computer = np.random.choice(outcomes)
+        rock_paper_scissor(image, mp_Hands, hands, mpDraw, multiLandMarks, computer)
+
+        ret, buffer = cv2.imencode('.jpg', image)
+        frame = buffer.tobytes()
+        yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+
+
 
